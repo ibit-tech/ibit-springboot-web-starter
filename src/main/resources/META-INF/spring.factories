@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+tech.ibit.web.springboot.autoconfigure.ApiExceptionConfigure,\
+tech.ibit.web.springboot.response.CustomResponseBodyAdvice
