@@ -90,6 +90,9 @@ public class ApiExceptionConfigure {
     @ResponseBody
     public Response handleError(BindException e) {
         FieldError error = e.getFieldError();
+        if (null == error) {
+            return Response.getInstance(DefaultErrorCode.ParameterTypeError.CODE);
+        }
         String defaultMessage = error.getDefaultMessage();
         if (ApiException.isApiCode(defaultMessage)) {
             // 如果是已知系统异常，不捕获
