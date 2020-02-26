@@ -7,6 +7,7 @@ import tech.ibit.web.springboot.context.WebContext;
 /**
  * 自定义返回格式
  *
+ * @param <T> data数据类型
  * @author IBIT TECH
  */
 @Data
@@ -109,6 +110,8 @@ public class Response<T> {
      * @param message   消息
      * @param data      数据
      * @param throwable 异常
+     * @param <T>       data数据类型
+     * @return 实例
      */
     public static <T> Response getInstance(int code, String message, T data, Throwable throwable) {
         return new Response<>(code, message, data, throwable);
@@ -117,6 +120,8 @@ public class Response<T> {
 
     /**
      * 获取实例
+     *
+     * @return 实例
      */
     public static Response getInstance() {
         return new Response<>();
@@ -126,6 +131,8 @@ public class Response<T> {
      * 获取实例
      *
      * @param data 数据
+     * @param <T>  data数据类型
+     * @return 实例
      */
     public static <T> Response<T> getInstance(T data) {
         return new Response<>(data);
@@ -138,6 +145,8 @@ public class Response<T> {
      * @param code    编码
      * @param message 消息
      * @param data    数据
+     * @param <T>     data数据类型
+     * @return 实例
      */
     public static <T> Response<T> getInstance(int code, String message, T data) {
         return new Response<>(code, message, data);
@@ -149,6 +158,8 @@ public class Response<T> {
      *
      * @param code    编码
      * @param message 消息
+     * @param <T>     data数据类型
+     * @return 实例
      */
     public static <T> Response<T> getInstance(int code, String message) {
         return new Response<>(code, message);
