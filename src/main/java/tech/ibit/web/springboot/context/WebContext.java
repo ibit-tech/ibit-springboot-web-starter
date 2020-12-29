@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 /**
  * 上下文
  *
- * @author IBIT TECH
+ * @author iBit程序猿
  */
 public class WebContext {
 
@@ -39,14 +39,14 @@ public class WebContext {
     /**
      * 定义上下文
      */
-    private static ThreadLocal<WebContext> contextThreadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<WebContext> CONTEXT_THREAD_LOCAL = new ThreadLocal<>();
 
     /**
      * 初始化
      */
     public static void init() {
         WebContext context = new WebContext();
-        contextThreadLocal.set(context);
+        CONTEXT_THREAD_LOCAL.set(context);
     }
 
     /**
@@ -55,8 +55,8 @@ public class WebContext {
      * @param requestId 请求id
      */
     public static void setRequestId(String requestId) {
-        if (null != contextThreadLocal.get()) {
-            contextThreadLocal.get().requestId = requestId;
+        if (null != CONTEXT_THREAD_LOCAL.get()) {
+            CONTEXT_THREAD_LOCAL.get().requestId = requestId;
         }
     }
 
@@ -66,8 +66,8 @@ public class WebContext {
      * @param session session
      */
     public static void setSession(Session session) {
-        if (null != contextThreadLocal.get()) {
-            contextThreadLocal.get().session = session;
+        if (null != CONTEXT_THREAD_LOCAL.get()) {
+            CONTEXT_THREAD_LOCAL.get().session = session;
         }
     }
 
@@ -77,8 +77,8 @@ public class WebContext {
      * @param beginTime 开始时间
      */
     public static void setBeginTime(long beginTime) {
-        if (null != contextThreadLocal.get()) {
-            contextThreadLocal.get().beginTime = beginTime;
+        if (null != CONTEXT_THREAD_LOCAL.get()) {
+            CONTEXT_THREAD_LOCAL.get().beginTime = beginTime;
         }
     }
 
@@ -124,7 +124,7 @@ public class WebContext {
      * @return session
      */
     public static Session getSession() {
-        return null == contextThreadLocal.get() ? null : contextThreadLocal.get().session;
+        return null == CONTEXT_THREAD_LOCAL.get() ? null : CONTEXT_THREAD_LOCAL.get().session;
     }
 
     /**
@@ -133,7 +133,7 @@ public class WebContext {
      * @return 请求id
      */
     public static String getRequestId() {
-        return null == contextThreadLocal.get() ? null : contextThreadLocal.get().requestId;
+        return null == CONTEXT_THREAD_LOCAL.get() ? null : CONTEXT_THREAD_LOCAL.get().requestId;
     }
 
     /**
@@ -142,7 +142,7 @@ public class WebContext {
      * @return 开始时间
      */
     public static long getBeginTime() {
-        return null == contextThreadLocal.get() ? -1 : contextThreadLocal.get().beginTime;
+        return null == CONTEXT_THREAD_LOCAL.get() ? -1 : CONTEXT_THREAD_LOCAL.get().beginTime;
     }
 
 
@@ -150,6 +150,6 @@ public class WebContext {
      * 销毁
      */
     public static void destroy() {
-        contextThreadLocal.remove();
+        CONTEXT_THREAD_LOCAL.remove();
     }
 }

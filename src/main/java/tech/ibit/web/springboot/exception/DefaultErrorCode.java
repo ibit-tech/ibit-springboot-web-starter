@@ -3,7 +3,7 @@ package tech.ibit.web.springboot.exception;
 /**
  * 定义参数异常
  *
- * @author IBIT TECH
+ * @author iBit程序猿
  */
 public interface DefaultErrorCode extends ErrorCode {
 

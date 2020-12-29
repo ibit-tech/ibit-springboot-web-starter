@@ -1,6 +1,5 @@
 package tech.ibit.web.springboot.log;
 
-import lombok.Data;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import java.lang.reflect.InvocationTargetException;
@@ -9,9 +8,8 @@ import java.util.Map;
 /**
  * 详细访问日志（打印返回结果、请求头部、返回头部等信息）
  *
- * @author IBIT TECH
+ * @author iBit程序猿
  */
-@Data
 public class DetailAccessLogItem extends AccessLogItem {
 
     /**
@@ -47,5 +45,62 @@ public class DetailAccessLogItem extends AccessLogItem {
         } catch (IllegalAccessException | InvocationTargetException | NoSuchMethodException e) {
             // ignore
         }
+    }
+
+    /**
+     * Gets the value of result
+     *
+     * @return the value of result
+     */
+    public String getResult() {
+        return result;
+    }
+
+    /**
+     * Sets the result
+     * <p>You can use getResult() to get the value of result</p>
+     *
+     * @param result result
+     */
+    public void setResult(String result) {
+        this.result = result;
+    }
+
+    /**
+     * Gets the value of requestHeaders
+     *
+     * @return the value of requestHeaders
+     */
+    public Map<String, String> getRequestHeaders() {
+        return requestHeaders;
+    }
+
+    /**
+     * Sets the requestHeaders
+     * <p>You can use getRequestHeaders() to get the value of requestHeaders</p>
+     *
+     * @param requestHeaders requestHeaders
+     */
+    public void setRequestHeaders(Map<String, String> requestHeaders) {
+        this.requestHeaders = requestHeaders;
+    }
+
+    /**
+     * Gets the value of responseHeaders
+     *
+     * @return the value of responseHeaders
+     */
+    public Map<String, String> getResponseHeaders() {
+        return responseHeaders;
+    }
+
+    /**
+     * Sets the responseHeaders
+     * <p>You can use getResponseHeaders() to get the value of responseHeaders</p>
+     *
+     * @param responseHeaders responseHeaders
+     */
+    public void setResponseHeaders(Map<String, String> responseHeaders) {
+        this.responseHeaders = responseHeaders;
     }
 }

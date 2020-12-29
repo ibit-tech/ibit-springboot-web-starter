@@ -13,10 +13,10 @@ import java.lang.reflect.Method;
 /**
  * 自定义返回格式
  *
- * @author IBIT TECH
+ * @author iBit程序猿
  */
 @RestControllerAdvice
-public class CustomResponseBodyAdvice implements ResponseBodyAdvice {
+public class CustomResponseBodyAdvice implements ResponseBodyAdvice<Object> {
 
     @Override
     public boolean supports(MethodParameter methodParameter, Class aClass) {

@@ -1,14 +1,12 @@
 package tech.ibit.web.springboot.exception;
 
-import lombok.Data;
 import org.apache.commons.lang.StringUtils;
 
 /**
  * 定义api异常
  *
- * @author IBIT TECH
+ * @author iBit程序猿
  */
-@Data
 public class ApiException extends RuntimeException {
 
     /**
@@ -20,17 +18,17 @@ public class ApiException extends RuntimeException {
     /**
      * 错误码
      */
-    private int code;
+    private final int code;
 
     /**
      * 错误信息
      */
-    private String message;
+    private final String message;
 
     /**
      * 错误数据
      */
-    private Object data;
+    private final Object data;
 
 
     /**
@@ -93,4 +91,31 @@ public class ApiException extends RuntimeException {
         return StringUtils.isNotEmpty(errorCodeMessage) && errorCodeMessage.matches("\\d+__.*");
     }
 
+    /**
+     * Gets the value of code
+     *
+     * @return the value of code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * Gets the value of message
+     *
+     * @return the value of message
+     */
+    @Override
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * Gets the value of data
+     *
+     * @return the value of data
+     */
+    public Object getData() {
+        return data;
+    }
 }

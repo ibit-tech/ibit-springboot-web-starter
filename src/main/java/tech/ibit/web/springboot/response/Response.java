@@ -1,16 +1,14 @@
 package tech.ibit.web.springboot.response;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
 import tech.ibit.web.springboot.context.WebContext;
 
 /**
  * 自定义返回格式
  *
  * @param <T> data数据类型
- * @author IBIT TECH
+ * @author iBit程序猿
  */
-@Data
 public class Response<T> {
 
     /**
@@ -34,12 +32,12 @@ public class Response<T> {
     /**
      * 系统时间戳
      */
-    private long timestamp = System.currentTimeMillis();
+    private final long timestamp = System.currentTimeMillis();
 
     /**
      * 请求id
      */
-    private String requestId = WebContext.getRequestId();
+    private final String requestId = WebContext.getRequestId();
 
     /**
      * 判断是否成功
@@ -113,7 +111,7 @@ public class Response<T> {
      * @param <T>       data数据类型
      * @return 实例
      */
-    public static <T> Response getInstance(int code, String message, T data, Throwable throwable) {
+    public static <T> Response<T> getInstance(int code, String message, T data, Throwable throwable) {
         return new Response<>(code, message, data, throwable);
     }
 
@@ -123,7 +121,7 @@ public class Response<T> {
      *
      * @return 实例
      */
-    public static Response getInstance() {
+    public static Response<?> getInstance() {
         return new Response<>();
     }
 
@@ -165,4 +163,57 @@ public class Response<T> {
         return new Response<>(code, message);
     }
 
+    /**
+     * Gets the value of code
+     *
+     * @return the value of code
+     */
+    public int getCode() {
+        return code;
+    }
+
+    /**
+     * Gets the value of message
+     *
+     * @return the value of message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * Gets the value of data
+     *
+     * @return the value of data
+     */
+    public T getData() {
+        return data;
+    }
+
+    /**
+     * Gets the value of throwable
+     *
+     * @return the value of throwable
+     */
+    public Throwable getThrowable() {
+        return throwable;
+    }
+
+    /**
+     * Gets the value of timestamp
+     *
+     * @return the value of timestamp
+     */
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    /**
+     * Gets the value of requestId
+     *
+     * @return the value of requestId
+     */
+    public String getRequestId() {
+        return requestId;
+    }
 }

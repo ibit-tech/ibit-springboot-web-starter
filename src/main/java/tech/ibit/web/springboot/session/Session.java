@@ -5,7 +5,7 @@ import java.util.Map;
 /**
  * 定义session
  *
- * @author IBIT TECH
+ * @author iBit程序猿
  */
 public interface Session {
 

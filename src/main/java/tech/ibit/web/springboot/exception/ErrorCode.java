@@ -3,7 +3,7 @@ package tech.ibit.web.springboot.exception;
 /**
  * 定义错误码定义错误码接口
  *
- * @author IBIT TECH
+ * @author iBit程序猿
  */
 public interface ErrorCode {
 

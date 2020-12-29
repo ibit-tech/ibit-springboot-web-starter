@@ -26,7 +26,7 @@ import java.util.Set;
 /**
  * 错误日志处理
  *
- * @author IBIT TECH
+ * @author iBit程序猿
  */
 @ControllerAdvice
 public class ApiExceptionConfigure {
@@ -39,7 +39,7 @@ public class ApiExceptionConfigure {
      */
     @ExceptionHandler(MissingServletRequestParameterException.class)
     @ResponseBody
-    public Response handleError(MissingServletRequestParameterException e) {
+    public Response<?> handleError(MissingServletRequestParameterException e) {
         String message = String.format("Missing Request Parameter: %s", e.getParameterName());
         return Response.getInstance(DefaultErrorCode.ParameterMissing.CODE, message);
     }
@@ -52,7 +52,7 @@ public class ApiExceptionConfigure {
      */
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
     @ResponseBody
-    public Response handleError(MethodArgumentTypeMismatchException e) {
+    public Response<?> handleError(MethodArgumentTypeMismatchException e) {
         String message = String.format("Method Argument Type Mismatch: %s", e.getName());
         return Response.getInstance(DefaultErrorCode.ParameterTypeError.CODE, message);
     }
@@ -65,19 +65,8 @@ public class ApiExceptionConfigure {
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseBody
-    public Response handleError(MethodArgumentNotValidException e) {
-        BindingResult result = e.getBindingResult();
-        FieldError error = result.getFieldError();
-        if (null == error) {
-            return Response.getInstance(DefaultErrorCode.ParameterTypeError.CODE);
-        }
-        String defaultMessage = error.getDefaultMessage();
-        if (ApiException.isApiCode(defaultMessage)) {
-            // 如果是已知系统异常，不捕获
-            return getExceptionResponse(defaultMessage);
-        }
-        String message = String.format("%s:%s", error.getField(), error.getDefaultMessage());
-        return Response.getInstance(DefaultErrorCode.ParameterTypeError.CODE, message);
+    public Response<?> handleError(MethodArgumentNotValidException e) {
+        return getHandleError(e.getBindingResult());
     }
 
     /**
@@ -88,7 +77,17 @@ public class ApiExceptionConfigure {
      */
     @ExceptionHandler(BindException.class)
     @ResponseBody
-    public Response handleError(BindException e) {
+    public Response<?> handleError(BindingResult e) {
+        return getHandleError(e);
+    }
+
+    /**
+     * 处理绑定错误
+     *
+     * @param e 绑定结果
+     * @return 异常返回
+     */
+    private Response<?> getHandleError(BindingResult e) {
         FieldError error = e.getFieldError();
         if (null == error) {
             return Response.getInstance(DefaultErrorCode.ParameterTypeError.CODE);
@@ -110,7 +109,7 @@ public class ApiExceptionConfigure {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseBody
-    public Response handleError(ConstraintViolationException e) {
+    public Response<?> handleError(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
         ConstraintViolation<?> violation = violations.iterator().next();
         String defaultMessage = violation.getMessage();
@@ -131,7 +130,7 @@ public class ApiExceptionConfigure {
      */
     @ExceptionHandler(NoHandlerFoundException.class)
     @ResponseBody
-    public Response handleError(NoHandlerFoundException e) {
+    public Response<?> handleError(NoHandlerFoundException e) {
         return getExceptionResponse(DefaultErrorCode.NotFound.MESSAGE, e);
     }
 
@@ -143,7 +142,7 @@ public class ApiExceptionConfigure {
      */
     @ExceptionHandler(HttpMessageNotReadableException.class)
     @ResponseBody
-    public Response handleError(HttpMessageNotReadableException e) {
+    public Response<?> handleError(HttpMessageNotReadableException e) {
         return getExceptionResponse(DefaultErrorCode.MessageNotReadable.MESSAGE, e);
     }
 
@@ -155,7 +154,7 @@ public class ApiExceptionConfigure {
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
     @ResponseBody
-    public Response handleError(HttpRequestMethodNotSupportedException e) {
+    public Response<?> handleError(HttpRequestMethodNotSupportedException e) {
         return getExceptionResponse(DefaultErrorCode.MethodNotSupported.MESSAGE, e);
     }
 
@@ -166,7 +165,7 @@ public class ApiExceptionConfigure {
      * @return 异常返回
      */
     @ExceptionHandler(HttpMediaTypeNotSupportedException.class)
-    public Response handleError(HttpMediaTypeNotSupportedException e) {
+    public Response<?> handleError(HttpMediaTypeNotSupportedException e) {
         return getExceptionResponse(DefaultErrorCode.MediaTypeNotSupported.MESSAGE, e);
     }
 
@@ -178,7 +177,7 @@ public class ApiExceptionConfigure {
      */
     @ExceptionHandler(ApiException.class)
     @ResponseBody
-    public Response handleError(ApiException e) {
+    public Response<?> handleError(ApiException e) {
         return Response.getInstance(e.getCode(), e.getMessage(), e.getData());
     }
 
@@ -190,7 +189,7 @@ public class ApiExceptionConfigure {
      */
     @ExceptionHandler(Throwable.class)
     @ResponseBody
-    public Response handleError(Throwable e) {
+    public Response<?> handleError(Throwable e) {
         // 只有未知错误才打印堆栈信息
         return getExceptionResponse(ErrorCode.MESSAGE, e);
     }
@@ -201,7 +200,7 @@ public class ApiExceptionConfigure {
      * @param errorMessage 错误信息
      * @return 异常返回对象
      */
-    private Response getExceptionResponse(String errorMessage) {
+    private Response<?> getExceptionResponse(String errorMessage) {
         ApiException apiException = new ApiException(errorMessage);
         return Response.getInstance(apiException.getCode(), apiException.getMessage(), apiException.getData());
     }
@@ -213,7 +212,7 @@ public class ApiExceptionConfigure {
      * @param e            异常
      * @return 异常返回对象
      */
-    private Response getExceptionResponse(String errorMessage, Throwable e) {
+    private Response<?> getExceptionResponse(String errorMessage, Throwable e) {
         ApiException apiException = new ApiException(errorMessage, e);
         return Response.getInstance(apiException.getCode(), apiException.getMessage(), apiException.getData(), apiException);
     }
