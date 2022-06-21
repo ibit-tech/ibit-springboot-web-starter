@@ -16,7 +16,7 @@
         <java.version>1.8</java.version>
         <gpg.skip>false</gpg.skip>
         <javadoc.skip>false</javadoc.skip>
-        <mysql-connector-java.version>8.0.16</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.28</mysql-connector-java.version>
         <spring-webmvc.version>5.2.3.RELEASE</spring-webmvc.version>
         <structlog4j.version>1.4</structlog4j.version>
         <ibit-mybatis.version>2.5</ibit-mybatis.version>
